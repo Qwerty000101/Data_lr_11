@@ -15,12 +15,16 @@ from multiprocessing import Barrier, Manager, Process
 def sum_row_1(x, eps, s_dict, br, lock):
     s = 0
     n = 1
+    stepen_1 = 2 ** n
+    stepen_2 = 3 ** n
+    c = 1
     while True:
-        a = 1 / (2 ** n)
-        b = 1 / (3 ** n)
-        c = math.pow(x, n - 1)
+        a = 1 / (stepen_1)
+        b = 1 / (stepen_2)
         element = (a + b) * c
-
+        stepen_1 *= 2
+        stepen_2 *= 3
+        c *= x 
         if abs(element) < eps:
             break
         else:
@@ -36,14 +40,16 @@ def sum_row_2(x, eps, sum_dict, br, lock):
     sum = 0
     n = 0
     f = 1
+    k = 1
     i = 1
+    flasher = -1
     while True:
         z = 2 * i
-        k = x ** (2 * n)
         f *= (z - 1) * z
-        element = ((-1) ** n) * k / (f / 2)
+        flasher *= -1
+        element = (flasher) * k / (f / 2)
         i = n + 1
-
+        k *= x ** 2
         if abs(element) < eps:
             break
         else:
